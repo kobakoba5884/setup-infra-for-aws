@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  workspace:
+    container_name: ${PROJECT_NAME:-java}-workspace
+    build:
+      context: ./docker/workspace
+      args:
+        USER_NAME: ${USER_NAME:-vscode}
+        USER_GROUP_NAME: ${USER_GROUP_NAME:-workspace}
+        USER_UID: ${USER_UID:-1000}
+        USER_GID: ${USER_GID:-1000}
+        JAVA_VERSION: ${JAVA_VERSION:-17.0.4-amzn}
+        GRADLE_VERSION: ${GRADLE_VERSION:-7.3}
+        LOCALE: ${LOCALE:-en_US.UTF-8}
+    tty: true
+    environment:
+      TZ: ${TIME_ZONE:-Asia/Tokyo}
+    volumes:
+      - ../:/home/${USER_NAME:-vscode}/workspace:cached
+      - ~/.aws:/home/${USER_NAME:-vscode}/.aws
+    ports:
+      - 5555:5555
