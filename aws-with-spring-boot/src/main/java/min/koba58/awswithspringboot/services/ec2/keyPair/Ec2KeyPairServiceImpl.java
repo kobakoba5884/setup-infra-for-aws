@@ -1,6 +1,6 @@
-package min.koba58.awswithspringboot.services.ec2;
+package min.koba58.awswithspringboot.services.ec2.keyPair;
 
-import static min.koba58.awswithspringboot.configs.Ec2Config.FOLDER_PATH;
+import static min.koba58.awswithspringboot.configs.AwsConfig.FOLDER_PATH;
 
 import java.io.BufferedWriter;
 import java.io.File;

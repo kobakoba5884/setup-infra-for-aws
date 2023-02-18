@@ -1,4 +1,4 @@
-package min.koba58.awswithspringboot.services.ec2;
+package min.koba58.awswithspringboot.services.ec2.instance;
 
 import min.koba58.awswithspringboot.models.Ec2InstanceDto;
 

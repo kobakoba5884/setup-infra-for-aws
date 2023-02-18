@@ -1,4 +1,4 @@
-package min.koba58.awswithspringboot.services.ec2;
+package min.koba58.awswithspringboot.services.ec2.keyPair;
 
 import java.util.List;
 import java.util.Optional;

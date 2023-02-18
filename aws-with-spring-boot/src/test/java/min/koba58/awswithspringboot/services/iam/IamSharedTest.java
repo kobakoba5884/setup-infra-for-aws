@@ -1,28 +1,29 @@
-package min.koba58.awswithspringboot;
+package min.koba58.awswithspringboot.services.iam;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import min.koba58.awswithspringboot.services.vpc.VpcService;
+import min.koba58.awswithspringboot.services.iam.group.IamGroupService;
+import min.koba58.awswithspringboot.services.iam.user.IamUserService;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@ExtendWith(MockitoExtension.class)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class SharedTest {
+public class IamSharedTest {
     @Autowired
-    protected VpcService vpcService;
+    protected IamUserService iamUserService;
 
-    protected String vpcName = "test-vpc";
-    
+    @Autowired
+    protected IamGroupService iamGroupService;
+
+    protected String userName = "test-user";
+
+    protected String groupName = "test-group";
+
     @BeforeEach
     public void beforeEach(TestInfo testInfo) {
         System.out.println("Starting test: %s".formatted(testInfo.getDisplayName()));

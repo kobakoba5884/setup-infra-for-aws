@@ -1,4 +1,4 @@
-package min.koba58.awswithspringboot.services.ec2;
+package min.koba58.awswithspringboot.services.ec2.instance;
 
 import static min.koba58.awswithspringboot.configs.GlobalConfig.DEFAULT_VPC_ID;
 
@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import min.koba58.awswithspringboot.models.Ec2InstanceDto;
+import min.koba58.awswithspringboot.services.ec2.keyPair.Ec2KeyPairService;
+import min.koba58.awswithspringboot.services.ec2.securityGroup.Ec2SecurityGroupService;
+import min.koba58.awswithspringboot.services.ec2.tag.Ec2TagService;
 import software.amazon.awssdk.services.ec2.Ec2Client;
 import software.amazon.awssdk.services.ec2.model.Ec2Exception;
 import software.amazon.awssdk.services.ec2.model.KeyPairInfo;

@@ -1,4 +1,4 @@
-package min.koba58.awswithspringboot.services.ec2;
+package min.koba58.awswithspringboot.services.ec2.securityGroup;
 
 import java.util.Optional;
 

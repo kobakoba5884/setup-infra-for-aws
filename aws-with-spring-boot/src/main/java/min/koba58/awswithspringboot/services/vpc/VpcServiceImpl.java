@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import min.koba58.awswithspringboot.services.ec2.Ec2TagService;
+import min.koba58.awswithspringboot.services.ec2.tag.Ec2TagService;
 import software.amazon.awssdk.awscore.exception.AwsErrorDetails;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
 import software.amazon.awssdk.services.ec2.Ec2Client;
@@ -49,19 +49,18 @@ public class VpcServiceImpl implements VpcService {
         }
     }
 
-    private void waitUntilVpcAvailable(String vpcId) throws Ec2Exception{
+    private void waitUntilVpcAvailable(String vpcId) throws Ec2Exception {
         DescribeVpcsRequest request = DescribeVpcsRequest.builder()
                 .vpcIds(vpcId)
                 .build();
-        
-        WaiterResponse<DescribeVpcsResponse> waiter = ec2Client.waiter().waitUntilVpcAvailable(request);
 
+        WaiterResponse<DescribeVpcsResponse> waiter = ec2Client.waiter().waitUntilVpcAvailable(request);
 
         Optional<DescribeVpcsResponse> response = waiter.matched().response();
 
-        if(response.isEmpty()){
+        if (response.isEmpty()) {
             AwsErrorDetails awsErrorDetails = AwsErrorDetails.builder()
-                .errorMessage("waitUntilVpcAvailable method is failed.").build();
+                    .errorMessage("waitUntilVpcAvailable method is failed.").build();
 
             throw Ec2Exception.builder().awsErrorDetails(awsErrorDetails).build();
         }

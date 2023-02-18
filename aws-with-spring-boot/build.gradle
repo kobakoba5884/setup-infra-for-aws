@@ -21,6 +21,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -30,6 +32,8 @@ dependencies {
     implementation platform('software.amazon.awssdk:bom:2.18.24')
 	// amazon ec2
     implementation 'software.amazon.awssdk:ec2'
+	// amazon iam
+    implementation 'software.amazon.awssdk:iam'
 
 	// to get my global ip address
     implementation 'io.ipinfo:ipinfo-api:2.1.1'
