@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import min.koba58.awswithspringboot.services.iam.group.IamGroupService;
+import min.koba58.awswithspringboot.services.iam.role.IamRoleService;
 import min.koba58.awswithspringboot.services.iam.user.IamUserService;
 
 @SpringBootTest
@@ -20,9 +21,14 @@ public class IamSharedTest {
     @Autowired
     protected IamGroupService iamGroupService;
 
+    @Autowired 
+    protected IamRoleService iamRoleService;
+
     protected String userName = "test-user";
 
     protected String groupName = "test-group";
+
+    protected String roleName = "test-role";
 
     @BeforeEach
     public void beforeEach(TestInfo testInfo) {

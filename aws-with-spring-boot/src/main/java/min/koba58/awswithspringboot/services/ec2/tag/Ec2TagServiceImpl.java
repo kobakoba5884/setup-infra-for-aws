@@ -1,7 +1,5 @@
 package min.koba58.awswithspringboot.services.ec2.tag;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -18,7 +16,7 @@ public class Ec2TagServiceImpl implements Ec2TagService{
 
     // generate tag name
     @Override
-    public Optional<CreateTagsResponse> createTag(String resourceId, String tagName) {
+    public CreateTagsResponse createTag(String resourceId, String tagName) throws Ec2Exception{
         try{
             Tag tag = Tag.builder()
                 .key("Name")
@@ -35,10 +33,11 @@ public class Ec2TagServiceImpl implements Ec2TagService{
 
             System.out.format("Successfully created %s at %s\n", tagName, resourceId);
 
-            return Optional.of(createTagsResponse);
+            return createTagsResponse;
         }catch(Ec2Exception e){
             System.err.println(e.awsErrorDetails().errorMessage());
-            return Optional.empty();
+            
+            throw e;
         }
     }
     

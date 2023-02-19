@@ -1,9 +1,7 @@
 package min.koba58.awswithspringboot.services.iam.group;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -22,32 +20,33 @@ import software.amazon.awssdk.services.iam.model.ListGroupsResponse;
 
 @Service
 @RequiredArgsConstructor
-public class IamGroupServiceImpl implements IamGroupService{
+public class IamGroupServiceImpl implements IamGroupService {
     private final IamClient iamClient;
-    
+
     // Create a new IAM group
     @Override
-    public Optional<CreateGroupResponse> createIamGroup(String groupName) {
+    public CreateGroupResponse createIamGroup(String groupName) throws IamException {
         CreateGroupRequest createGroupRequest = CreateGroupRequest.builder()
                 .groupName(groupName)
                 .build();
         try {
             CreateGroupResponse createGroupResponse = iamClient.createGroup(createGroupRequest);
-            
+
             Group group = createGroupResponse.group();
 
             System.out.printf("The new group (%s) was successfully created!!\n", group.groupName());
 
-            return Optional.of(createGroupResponse);
+            return createGroupResponse;
         } catch (IamException e) {
             System.err.println(e.awsErrorDetails().errorMessage());
-            return Optional.empty();
+
+            throw e;
         }
     }
 
     // Delete an existing IAM group
     @Override
-    public Optional<DeleteGroupResponse> deleteIamGroup(String groupName) {
+    public DeleteGroupResponse deleteIamGroup(String groupName) throws IamException {
         DeleteGroupRequest deleteGroupRequest = DeleteGroupRequest.builder()
                 .groupName(groupName)
                 .build();
@@ -56,17 +55,17 @@ public class IamGroupServiceImpl implements IamGroupService{
 
             System.out.printf("Group %s successfully deleted!!\n", groupName);
 
-            return Optional.of(deleteGroupResponse);
+            return deleteGroupResponse;
         } catch (IamException e) {
             System.err.println(e.awsErrorDetails().errorMessage());
 
-            return Optional.empty();
+            throw e;
         }
     }
 
     // Get an existing IAM group
     @Override
-    public Optional<Group> getIamGroup(String groupName) {
+    public Group getIamGroup(String groupName) throws IamException {
         GetGroupRequest getGroupRequest = GetGroupRequest.builder()
                 .groupName(groupName)
                 .build();
@@ -75,22 +74,22 @@ public class IamGroupServiceImpl implements IamGroupService{
 
             Group group = getGroupResponse.group();
 
-            System.out.printf("Found IAM group (%s): %s\n",group.groupName(), group.arn());
+            System.out.printf("Found IAM group (%s): %s\n", group.groupName(), group.arn());
 
-            return Optional.of(group);
+            return group;
         } catch (IamException e) {
             System.err.println(e.awsErrorDetails().errorMessage());
 
-            return Optional.empty();
+            throw e;
         }
     }
 
     // Get all IAM groups
     @Override
-    public List<Group> getIamGroups() {
+    public List<Group> getIamGroups() throws IamException{
         ListGroupsRequest listGroupsRequest = ListGroupsRequest.builder()
-            .build();
-            
+                .build();
+
         List<Group> groups = new ArrayList<>();
         try {
             ListGroupsResponse listGroupsResponse = iamClient.listGroups(listGroupsRequest);
@@ -104,7 +103,8 @@ public class IamGroupServiceImpl implements IamGroupService{
             return groups;
         } catch (IamException e) {
             System.err.println(e.awsErrorDetails().errorMessage());
-            return Collections.emptyList();
+
+            throw e;
         }
     }
 }

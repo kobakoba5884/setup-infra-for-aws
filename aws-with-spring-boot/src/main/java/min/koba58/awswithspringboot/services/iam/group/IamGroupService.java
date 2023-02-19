@@ -1,18 +1,18 @@
 package min.koba58.awswithspringboot.services.iam.group;
 
 import java.util.List;
-import java.util.Optional;
 
 import software.amazon.awssdk.services.iam.model.CreateGroupResponse;
 import software.amazon.awssdk.services.iam.model.DeleteGroupResponse;
 import software.amazon.awssdk.services.iam.model.Group;
+import software.amazon.awssdk.services.iam.model.IamException;
 
 public interface IamGroupService {
-    Optional<CreateGroupResponse> createIamGroup(String groupName);
+    CreateGroupResponse createIamGroup(String groupName) throws IamException;
 
-    Optional<DeleteGroupResponse> deleteIamGroup(String groupName);
+    DeleteGroupResponse deleteIamGroup(String groupName) throws IamException;
 
-    Optional<Group> getIamGroup(String groupName);
+    Group getIamGroup(String groupName) throws IamException;
 
-    List<Group> getIamGroups();
+    List<Group> getIamGroups() throws IamException;
 }

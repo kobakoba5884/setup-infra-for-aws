@@ -1,7 +1,5 @@
 package min.koba58.awswithspringboot.services.ec2.instance;
 
-import static min.koba58.awswithspringboot.configs.GlobalConfig.DEFAULT_VPC_ID;
-
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -9,21 +7,19 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import min.koba58.awswithspringboot.models.Ec2InstanceDto;
 import min.koba58.awswithspringboot.services.ec2.keyPair.Ec2KeyPairService;
-import min.koba58.awswithspringboot.services.ec2.securityGroup.Ec2SecurityGroupService;
 import min.koba58.awswithspringboot.services.ec2.tag.Ec2TagService;
 import software.amazon.awssdk.services.ec2.Ec2Client;
 import software.amazon.awssdk.services.ec2.model.Ec2Exception;
 import software.amazon.awssdk.services.ec2.model.KeyPairInfo;
 import software.amazon.awssdk.services.ec2.model.RunInstancesRequest;
 import software.amazon.awssdk.services.ec2.model.RunInstancesResponse;
-import software.amazon.awssdk.services.ec2.model.SecurityGroup;
 
 @Service
 @RequiredArgsConstructor
 public class Ec2InstanceServiceImpl implements Ec2InstanceService{
     private final Ec2Client ec2Client;
 
-    private final Ec2SecurityGroupService securityGroupService;
+    // private final Ec2SecurityGroupService securityGroupService;
 
     private final Ec2KeyPairService keyPairService;
 
@@ -61,13 +57,15 @@ public class Ec2InstanceServiceImpl implements Ec2InstanceService{
     }
 
     private void prepareBeforeCreating(Ec2InstanceDto ec2InstanceDto){
+        @SuppressWarnings("unused")
         String securityGroupName = ec2InstanceDto.getSecurityGroupName();
 
-        Optional<SecurityGroup> securityGroup = securityGroupService.getEc2SecurityGroupByName(securityGroupName);
+        // todo
+        // SecurityGroup securityGroup = securityGroupService.getEc2SecurityGroupByName(securityGroupName);
 
-        if(securityGroup.isEmpty()){
-            securityGroupService.createEc2SecurityGroup(securityGroupName, securityGroupName, DEFAULT_VPC_ID);
-        }
+        // if(securityGroup.isEmpty()){
+        //     securityGroupService.createEc2SecurityGroup(securityGroupName, securityGroupName, DEFAULT_VPC_ID);
+        // }
 
         String keyPairName = ec2InstanceDto.getKeyPairName();
 

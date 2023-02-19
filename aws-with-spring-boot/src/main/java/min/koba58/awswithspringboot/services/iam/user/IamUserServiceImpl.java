@@ -1,7 +1,6 @@
 package min.koba58.awswithspringboot.services.iam.user;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,10 +27,9 @@ import software.amazon.awssdk.services.iam.waiters.IamWaiter;
 public class IamUserServiceImpl implements IamUserService{
     private final IamClient iamClient;
 
-    // create iam user
+    // create IAM user
     @Override
-    public Optional<CreateUserResponse> createIamUser(String userName) {
-
+    public CreateUserResponse createIamUser(String userName) throws IamException{
         try {
             CreateUserRequest createUserRequest = CreateUserRequest.builder()
                     .userName(userName)
@@ -46,16 +44,17 @@ public class IamUserServiceImpl implements IamUserService{
 
             System.out.printf("The new user (%s) was successfully created!!\n", createdUserName);
 
-            return Optional.of(createUserResponse);
+            return createUserResponse;
         } catch (IamException e) {
             System.err.println(e.awsErrorDetails().errorMessage());
-            return Optional.empty();
+            
+            throw e;
         }
     }
 
-    // delete iam user
+    // delete IAM user
     @Override
-    public Optional<DeleteUserResponse> deleteIamUser(String userName) {
+    public DeleteUserResponse deleteIamUser(String userName) throws IamException{
         DeleteUserRequest deleteUserRequest = DeleteUserRequest.builder()
             .userName(userName)
             .build();
@@ -65,17 +64,17 @@ public class IamUserServiceImpl implements IamUserService{
 
             System.out.println("successfully delete %s!".formatted(userName));
 
-            return Optional.of(deleteUserResponse);
+            return deleteUserResponse;
         }catch(IamException e){
             System.err.println(e.awsErrorDetails().errorMessage());
 
-            return Optional.empty();
+            throw e;
         }
     }
 
     // get iam user
     @Override
-    public Optional<User> getIamUserByName(String userName) {
+    public User getIamUserByName(String userName) throws IamException{
         GetUserRequest getUserRequest = GetUserRequest.builder()
             .userName(userName)
             .build();
@@ -87,17 +86,17 @@ public class IamUserServiceImpl implements IamUserService{
 
             System.out.printf("Found IAM user: %s\n", iamUser.arn());
 
-            return Optional.of(iamUser);
+            return iamUser;
         } catch (IamException e) {
             System.err.println(e.awsErrorDetails().errorMessage());
 
-            return Optional.empty();
+            throw e;
         }
     }
 
-    // get all iam users
+    // get all IAM users
     @Override
-    public List<User> getIamUsers() {
+    public List<User> getIamUsers() throws IamException{
         ListUsersRequest listUsersRequest = ListUsersRequest.builder()
                 .build();
 
@@ -118,11 +117,11 @@ public class IamUserServiceImpl implements IamUserService{
         } catch (IamException e) {
             System.err.println(e.awsErrorDetails().errorMessage());
 
-            return Collections.emptyList();
+            throw e;
         }
     }
 
-    private Optional<GetUserResponse> waitUntilIamUserAvailable(String userName){
+    private Optional<GetUserResponse> waitUntilIamUserAvailable(String userName) throws IamException{
         IamWaiter iamWaiter = iamClient.waiter();
 
         GetUserRequest getUserRequest = GetUserRequest.builder()
@@ -140,7 +139,7 @@ public class IamUserServiceImpl implements IamUserService{
         } catch (IamException e) {
             System.err.println(e.awsErrorDetails().errorMessage());
 
-            return Optional.empty();
+            throw e;
         }
     }
 }
