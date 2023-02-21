@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.iam.model.User;
 
 public class IamUserServiceImplTest extends IamSharedTest {
     @Test
-    public void createIamUserTest() {
+    void createIamUserTest() {
         iamUserService.createIamUser(userName);
     }
 

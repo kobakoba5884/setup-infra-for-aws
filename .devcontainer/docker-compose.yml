@@ -16,6 +16,7 @@ services:
     tty: true
     environment:
       TZ: ${TIME_ZONE:-Asia/Tokyo}
+      PROFILE_NAME: ${PROFILE_NAME:-default}
     volumes:
       - ../:/home/${USER_NAME:-vscode}/workspace:cached
       - ~/.aws:/home/${USER_NAME:-vscode}/.aws
