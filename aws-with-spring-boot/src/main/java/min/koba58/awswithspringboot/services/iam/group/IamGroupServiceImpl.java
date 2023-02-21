@@ -103,7 +103,7 @@ public class IamGroupServiceImpl implements IamGroupService {
             return groups;
         } catch (IamException e) {
             System.err.println(e.awsErrorDetails().errorMessage());
-
+            
             throw e;
         }
     }

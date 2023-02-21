@@ -15,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import min.koba58.awswithspringboot.services.iam.group.IamGroupService;
+import min.koba58.awswithspringboot.services.iam.policy.IamPolicyService;
 import min.koba58.awswithspringboot.services.iam.role.IamRoleService;
 import min.koba58.awswithspringboot.services.iam.user.IamUserService;
 
@@ -31,6 +32,9 @@ public class IamSharedTest {
 
     @Autowired 
     protected IamRoleService iamRoleService;
+
+    @Autowired
+    protected IamPolicyService iamPolicyService;
 
     protected String userName = "test-user";
 

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 
@@ -49,14 +48,12 @@ public class IamGroupServiceImplTest extends IamSharedTest {
     @ValueSource(strings = { "Non-existentGroupName", "Invalid GroupName" })
     void testGetIamGroup_itShouldReturnException(String testGroupName) {
         assertThrows(IamException.class, () -> {
-            Group result = iamGroupService.getIamGroup(testGroupName);
-
-            fail("group (%s) is existed !!".formatted(result.groupName()));
+            iamGroupService.getIamGroup(testGroupName);
         });
     }
 
-    @Order(4)
     @Test
+    @Order(4)
     void testGetIamGroups_normal() {
         assertDoesNotThrow(() -> {
             List<Group> result = iamGroupService.getIamGroups();
@@ -65,11 +62,19 @@ public class IamGroupServiceImplTest extends IamSharedTest {
         });
     }
 
-    @Order(5)
     @Test
+    @Order(5)
     void testDeleteIamGroup_normal() {
         DeleteGroupResponse result = iamGroupService.deleteIamGroup(groupName);
 
         assertTrue(result.sdkHttpResponse().isSuccessful());
+    }
+
+    @Test
+    @Order(6)
+    void testDeleteIamGroup_itShouldReturnException_giveNonExistedGroupName() {
+        assertThrows(IamException.class, () -> {
+            iamGroupService.deleteIamGroup(groupName);
+        });
     }
 }
