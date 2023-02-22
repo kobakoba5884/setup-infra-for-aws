@@ -15,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import min.koba58.awswithspringboot.services.iam.group.IamGroupService;
+import min.koba58.awswithspringboot.services.iam.group.IamGroupUpdateService;
 import min.koba58.awswithspringboot.services.iam.policy.IamPolicyService;
 import min.koba58.awswithspringboot.services.iam.role.IamRoleService;
 import min.koba58.awswithspringboot.services.iam.user.IamUserService;
@@ -30,17 +31,22 @@ public class IamSharedTest {
     @Autowired
     protected IamGroupService iamGroupService;
 
-    @Autowired 
+    @Autowired
     protected IamRoleService iamRoleService;
 
     @Autowired
     protected IamPolicyService iamPolicyService;
+
+    @Autowired
+    protected IamGroupUpdateService iamGroupUpdateService;
 
     protected String userName = "test-user";
 
     protected String groupName = "test-group";
 
     protected String roleName = "test-role";
+
+    protected String policyName = "AdministratorAccess";
 
     @BeforeEach
     void beforeEach(TestInfo testInfo) {

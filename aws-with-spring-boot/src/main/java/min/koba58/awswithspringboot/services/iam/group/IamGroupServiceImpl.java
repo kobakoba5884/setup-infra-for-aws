@@ -86,7 +86,7 @@ public class IamGroupServiceImpl implements IamGroupService {
 
     // Get all IAM groups
     @Override
-    public List<Group> getIamGroups() throws IamException{
+    public List<Group> getIamGroups() throws IamException {
         ListGroupsRequest listGroupsRequest = ListGroupsRequest.builder()
                 .build();
 
@@ -103,7 +103,7 @@ public class IamGroupServiceImpl implements IamGroupService {
             return groups;
         } catch (IamException e) {
             System.err.println(e.awsErrorDetails().errorMessage());
-            
+
             throw e;
         }
     }

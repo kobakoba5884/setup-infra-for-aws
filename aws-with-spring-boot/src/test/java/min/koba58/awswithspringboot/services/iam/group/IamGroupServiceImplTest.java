@@ -24,15 +24,9 @@ public class IamGroupServiceImplTest extends IamSharedTest {
     @Test
     @Order(1)
     void testCreateIamGroup_normal() {
-        try {
-            iamGroupService.deleteIamGroup(groupName);
+        CreateGroupResponse result = iamGroupService.createIamGroup(groupName);
 
-            CreateGroupResponse result = iamGroupService.createIamGroup(groupName);
-
-            assertTrue(result.sdkHttpResponse().isSuccessful());
-        } catch (IamException e) {
-            System.err.println(e.awsErrorDetails().errorMessage());
-        }
+        assertTrue(result.sdkHttpResponse().isSuccessful());
     }
 
     @Test
