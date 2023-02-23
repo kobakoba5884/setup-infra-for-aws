@@ -19,6 +19,8 @@ import min.koba58.awswithspringboot.services.iam.group.IamGroupUpdateService;
 import min.koba58.awswithspringboot.services.iam.policy.IamPolicyService;
 import min.koba58.awswithspringboot.services.iam.role.IamRoleService;
 import min.koba58.awswithspringboot.services.iam.user.IamUserService;
+import min.koba58.awswithspringboot.services.iam.user.IamUserUpdateService;
+import min.koba58.awswithspringboot.services.iam.user.LoginProfileService;
 
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
@@ -38,7 +40,13 @@ public class IamSharedTest {
     protected IamPolicyService iamPolicyService;
 
     @Autowired
+    protected IamUserUpdateService iamUserUpdateService;
+
+    @Autowired
     protected IamGroupUpdateService iamGroupUpdateService;
+
+    @Autowired
+    protected LoginProfileService loginProfileService;
 
     protected String userName = "test-user";
 

@@ -34,6 +34,8 @@ dependencies {
     implementation 'software.amazon.awssdk:ec2'
 	// amazon iam
     implementation 'software.amazon.awssdk:iam'
+	// amazon budgets
+	implementation 'software.amazon.awssdk:budgets'
 
 	// to get my global ip address
     implementation 'io.ipinfo:ipinfo-api:2.1.1'

@@ -10,27 +10,24 @@ import software.amazon.awssdk.services.iam.model.IamException;
 
 @Service
 @RequiredArgsConstructor
-public class IamUserUpdateServiceImpl implements IamUserUpdateService{
+public class IamUserUpdateServiceImpl implements IamUserUpdateService {
     private final IamClient iamClient;
 
     @Override
     public AttachUserPolicyResponse attachPolicyToIamUser(String userName, String policyArn) throws IamException {
         AttachUserPolicyRequest attachPolicyRequest = AttachUserPolicyRequest.builder()
-            .userName(userName)
-            .policyArn(policyArn)
-            .build();
-    try {
-        AttachUserPolicyResponse attachUserPolicyResponse = iamClient.attachUserPolicy(attachPolicyRequest);
+                .userName(userName)
+                .policyArn(policyArn)
+                .build();
+        try {
+            AttachUserPolicyResponse attachUserPolicyResponse = iamClient.attachUserPolicy(attachPolicyRequest);
 
-        System.out.printf("Policy %s successfully attached to user %s!!\n", policyArn, userName);
+            System.out.printf("Policy %s successfully attached to user %s!!\n", policyArn, userName);
 
-        return attachUserPolicyResponse;
-    } catch (IamException e) {
-        System.err.println(e.awsErrorDetails().errorMessage());
-        throw e;
+            return attachUserPolicyResponse;
+        } catch (IamException e) {
+            System.err.println(e.awsErrorDetails().errorMessage());
+            throw e;
+        }
     }
-    }
-
-
-    
 }

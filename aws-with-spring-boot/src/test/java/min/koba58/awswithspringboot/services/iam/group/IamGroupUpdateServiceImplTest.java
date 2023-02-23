@@ -21,10 +21,10 @@ public class IamGroupUpdateServiceImplTest extends IamSharedTest{
     }
 
     @Test
-    void testDeletePolicyFromIamGroup_normal() {
+    void testDetachPolicyFromIamGroup_normal() {
         String policyArn = iamPolicyService.getPolicyArnByPolicyName(policyName);
         
-        DetachGroupPolicyResponse result = iamGroupUpdateService.removePolicyFromIamGroup(groupName, policyArn);
+        DetachGroupPolicyResponse result = iamGroupUpdateService.detachPolicyFromIamGroup(groupName, policyArn);
 
         assertTrue(result.sdkHttpResponse().isSuccessful());
     }

@@ -1,0 +1,57 @@
+[
+  {
+    "_id": "d3ac0e1d-a203-425a-acc1-286009e81d50",
+    "colId": "93e0f998-3dba-46ee-9750-f3f05ce6fcb1",
+    "containerId": "de7d2636-97f1-45b5-a5a9-aee28c6da42b",
+    "name": "createUserForDay1",
+    "url": "{{BASE_URL}}/day1?userName=day1-user&groupName=day1-group&policyName=AdministratorAccess",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2023-02-23T14:59:29.967Z",
+    "modified": "2023-02-23T15:11:02.643Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "userName",
+        "value": "day1-user",
+        "isPath": false
+      },
+      {
+        "name": "groupName",
+        "value": "day1-group",
+        "isPath": false
+      },
+      {
+        "name": "policyName",
+        "value": "AdministratorAccess",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "5fad0cae-739c-4016-9e42-d064d882fdcf",
+    "colId": "93e0f998-3dba-46ee-9750-f3f05ce6fcb1",
+    "containerId": "de7d2636-97f1-45b5-a5a9-aee28c6da42b",
+    "name": "deleteUserForDay1",
+    "url": "{{BASE_URL}}/day1?userName=day1-user&groupName=day1-group",
+    "method": "DELETE",
+    "sortNum": 30000,
+    "created": "2023-02-23T15:11:25.846Z",
+    "modified": "2023-02-23T15:12:19.642Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "userName",
+        "value": "day1-user",
+        "isPath": false
+      },
+      {
+        "name": "groupName",
+        "value": "day1-group",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  }
+]

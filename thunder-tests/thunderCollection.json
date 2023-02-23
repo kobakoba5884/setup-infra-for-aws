@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "93e0f998-3dba-46ee-9750-f3f05ce6fcb1",
+    "colName": "setup-aws",
+    "created": "2023-02-23T14:58:50.412Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "de7d2636-97f1-45b5-a5a9-aee28c6da42b",
+        "name": "day1",
+        "containerId": "",
+        "created": "2023-02-23T14:59:05.280Z",
+        "sortNum": 10000
+      }
+    ]
+  }
+]

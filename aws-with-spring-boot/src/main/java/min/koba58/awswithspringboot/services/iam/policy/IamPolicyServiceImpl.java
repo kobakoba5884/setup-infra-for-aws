@@ -14,13 +14,10 @@ public class IamPolicyServiceImpl implements IamPolicyService {
     private final IamClient iamClient;
 
     @Override
-    public String getPolicyArnByPolicyName(String policyName) throws IamException{
+    public String getPolicyArnByPolicyName(String policyName) throws IamException {
         String convertedToArn = "arn:aws:iam::aws:policy/%s".formatted(policyName);
-
-        System.out.println(convertedToArn.equals("arn:aws:iam::aws:policy/AdministratorAccess"));
-        try{
-            GetPolicyResponse response = iamClient.getPolicy(request -> 
-                request.policyArn(convertedToArn).build());
+        try {
+            GetPolicyResponse response = iamClient.getPolicy(request -> request.policyArn(convertedToArn).build());
 
             return response.policy().arn();
         } catch (IamException e) {
@@ -33,12 +30,11 @@ public class IamPolicyServiceImpl implements IamPolicyService {
     @Override
     public Policy getPolicyByPolicyArn(String policyArn) throws IamException {
         try {
-            GetPolicyResponse response = iamClient.getPolicy(request -> 
-                request.policyArn(policyArn).build());
+            GetPolicyResponse response = iamClient.getPolicy(request -> request.policyArn(policyArn).build());
 
-                Policy policy = response.policy();
+            Policy policy = response.policy();
 
-                System.out.println("found policy which is %s".formatted(policy.policyName()));
+            System.out.println("found policy which is %s".formatted(policy.policyName()));
 
             return policy;
         } catch (IamException e) {

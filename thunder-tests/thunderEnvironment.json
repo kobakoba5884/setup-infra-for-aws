@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "c4ecb5fc-07a5-4417-afc1-d903be99805e",
+    "name": "setup-aws",
+    "default": true,
+    "sortNum": 10000,
+    "created": "2023-02-23T14:57:57.135Z",
+    "modified": "2023-02-23T14:57:57.135Z",
+    "data": [
+      {
+        "name": "BASE_URL",
+        "value": "http://localhost:8080/api/v1"
+      }
+    ]
+  }
+]

@@ -7,7 +7,7 @@ ARG USER_UID
 ARG USER_GID
 
 # general packages
-ARG PKG="vim curl unzip zip sudo tzdata git net-tools lsof"
+ARG PKG="vim curl unzip zip sudo tzdata git net-tools lsof groff"
 
 SHELL ["/bin/bash", "-c"]
 

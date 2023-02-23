@@ -24,7 +24,7 @@ public class IamRoleServiceImpl implements IamRoleService {
 
     // create IAM role
     @Override
-    public CreateRoleResponse createIamRole(String roleName, String policyDocument) throws IamException{
+    public CreateRoleResponse createIamRole(String roleName, String policyDocument) throws IamException {
         CreateRoleRequest createRoleRequest = CreateRoleRequest.builder()
                 .roleName(roleName)
                 .assumeRolePolicyDocument(policyDocument)
@@ -42,14 +42,14 @@ public class IamRoleServiceImpl implements IamRoleService {
             return createRoleResponse;
         } catch (IamException e) {
             System.err.println(e.awsErrorDetails().errorMessage());
-            
+
             throw e;
         }
     }
 
     // get IAM role
     @Override
-    public Role getIamRoleByName(String roleName) throws IamException{
+    public Role getIamRoleByName(String roleName) throws IamException {
         try {
             GetRoleResponse getRoleResponse = iamClient.getRole(request -> request.roleName(roleName).build());
 
@@ -67,7 +67,7 @@ public class IamRoleServiceImpl implements IamRoleService {
 
     // get all IAM roles
     @Override
-    public List<Role> getIamRoles() throws IamException{
+    public List<Role> getIamRoles() throws IamException {
         try {
             ListRolesResponse listRolesResponse = iamClient.listRoles();
 
@@ -89,7 +89,7 @@ public class IamRoleServiceImpl implements IamRoleService {
 
     // delete IAM role
     @Override
-    public DeleteRoleResponse deleteIamRole(String roleName) throws IamException{
+    public DeleteRoleResponse deleteIamRole(String roleName) throws IamException {
         try {
             DeleteRoleResponse deleteRoleResponse = iamClient.deleteRole(request -> request.roleName(roleName).build());
 
