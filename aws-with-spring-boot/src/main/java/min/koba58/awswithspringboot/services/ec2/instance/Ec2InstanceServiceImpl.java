@@ -45,7 +45,7 @@ public class Ec2InstanceServiceImpl implements Ec2InstanceService{
             RunInstancesResponse runInstancesResponse = ec2Client.runInstances(runInstancesRequest);
             String instanceId = runInstancesResponse.instances().get(0).instanceId();
 
-            tagService.createTag(instanceId, ec2InstanceDto.getTagName());
+            tagService.createNameTag(instanceId, ec2InstanceDto.getTagName());
 
             System.out.format("Successfully started EC2 Instance %s based on AMI %s\n", instanceId, amiId);
             
