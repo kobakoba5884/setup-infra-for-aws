@@ -3,5 +3,6 @@ bin/
 gradle/
 .gradle/
 gradlew*
+.vscode/
 
 GlobalConfig.java
