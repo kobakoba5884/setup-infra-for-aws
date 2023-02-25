@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import min.koba58.awswithspringboot.services.ec2.tag.Ec2TagService;
+import min.koba58.awswithspringboot.utils.SharedHandler;
 import software.amazon.awssdk.awscore.exception.AwsErrorDetails;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
 import software.amazon.awssdk.services.ec2.Ec2Client;
@@ -25,6 +26,8 @@ public class VpcServiceImpl implements VpcService {
     private final Ec2Client ec2Client;
 
     private final Ec2TagService tagService;
+
+    private final SharedHandler sharedHandler;
 
     // create vpc
     public String createVpc(String vpcName, String sidrBlock) throws Ec2Exception {
@@ -111,19 +114,7 @@ public class VpcServiceImpl implements VpcService {
         
             List<Vpc> vpcs = describeVpcsResponse.vpcs();
 
-            if(vpcs.isEmpty()){
-                AwsErrorDetails awsErrorDetails = AwsErrorDetails.builder()
-                    .errorMessage("not found vpc (%s)".formatted(vpcName)).build();
-
-                throw Ec2Exception.builder().awsErrorDetails(awsErrorDetails).build();
-            }else if (vpcs.size() > 1) {
-                AwsErrorDetails awsErrorDetails = AwsErrorDetails.builder()
-                        .errorMessage("It don't know which one %s is because there is more than one."
-                                .formatted(vpcName))
-                        .build();
-
-                throw Ec2Exception.builder().awsErrorDetails(awsErrorDetails).build();
-            }
+            sharedHandler.verifyIfResponseIsCorrect(vpcs, vpcName);
 
             return vpcs.get(0).vpcId();
         }catch (Ec2Exception e) {

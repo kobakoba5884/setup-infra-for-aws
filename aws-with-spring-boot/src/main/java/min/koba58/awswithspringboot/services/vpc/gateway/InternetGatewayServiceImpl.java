@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import min.koba58.awswithspringboot.services.ec2.tag.Ec2TagService;
+import min.koba58.awswithspringboot.utils.SharedHandler;
 import software.amazon.awssdk.awscore.exception.AwsErrorDetails;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
 import software.amazon.awssdk.services.ec2.Ec2Client;
@@ -23,7 +25,6 @@ import software.amazon.awssdk.services.ec2.model.Ec2Exception;
 import software.amazon.awssdk.services.ec2.model.Filter;
 import software.amazon.awssdk.services.ec2.model.InternetGateway;
 import software.amazon.awssdk.services.ec2.model.ResourceType;
-import software.amazon.awssdk.services.ec2.model.Tag;
 import software.amazon.awssdk.services.ec2.model.TagSpecification;
 
 @Service
@@ -31,17 +32,15 @@ import software.amazon.awssdk.services.ec2.model.TagSpecification;
 public class InternetGatewayServiceImpl implements InternetGatewayService {
     private final Ec2Client ec2Client;
 
+    private final Ec2TagService ec2TagService;
+
+    private final SharedHandler sharedHandler;
+
     @Override
     public CreateInternetGatewayResponse createInternetGateway(String internetGatewayName) throws Ec2Exception {
-        Tag tag = Tag.builder()
-                .key("Name")
-                .value(internetGatewayName)
-                .build();
 
-        TagSpecification tagSpecification = TagSpecification.builder()
-                .resourceType(ResourceType.INTERNET_GATEWAY)
-                .tags(tag)
-                .build();
+        TagSpecification tagSpecification = ec2TagService.buildNameTagSpecification(internetGatewayName,
+                ResourceType.INTERNET_GATEWAY);
 
         CreateInternetGatewayRequest createInternetGatewayRequest = CreateInternetGatewayRequest.builder()
                 .tagSpecifications(tagSpecification)
@@ -115,10 +114,7 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
 
     @Override
     public InternetGateway getInternetGatewayByName(String internetGatewayName) throws Ec2Exception {
-        Filter nameFilter = Filter.builder()
-                .name("tag:Name")
-                .values(internetGatewayName)
-                .build();
+        Filter nameFilter = ec2TagService.buildFilterName(internetGatewayName);
 
         DescribeInternetGatewaysRequest describeInternetGatewaysRequest = DescribeInternetGatewaysRequest.builder()
                 .filters(nameFilter)
@@ -130,19 +126,7 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
 
             List<InternetGateway> internetGateways = describeInternetGatewaysResponse.internetGateways();
 
-            if (internetGateways.isEmpty()) {
-                AwsErrorDetails awsErrorDetails = AwsErrorDetails.builder()
-                        .errorMessage("not found internet gateway (%s)".formatted(internetGatewayName)).build();
-
-                throw Ec2Exception.builder().awsErrorDetails(awsErrorDetails).build();
-            } else if (internetGateways.size() > 1) {
-                AwsErrorDetails awsErrorDetails = AwsErrorDetails.builder()
-                        .errorMessage("It don't know which one %s is because there is more than one."
-                                .formatted(internetGatewayName))
-                        .build();
-
-                throw Ec2Exception.builder().awsErrorDetails(awsErrorDetails).build();
-            }
+            sharedHandler.verifyIfResponseIsCorrect(internetGateways, internetGatewayName);
 
             return internetGateways.get(0);
         } catch (Ec2Exception e) {

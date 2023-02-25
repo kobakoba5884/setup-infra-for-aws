@@ -7,6 +7,7 @@ import software.amazon.awssdk.services.ec2.Ec2Client;
 import software.amazon.awssdk.services.ec2.model.CreateTagsRequest;
 import software.amazon.awssdk.services.ec2.model.CreateTagsResponse;
 import software.amazon.awssdk.services.ec2.model.Ec2Exception;
+import software.amazon.awssdk.services.ec2.model.Filter;
 import software.amazon.awssdk.services.ec2.model.ResourceType;
 import software.amazon.awssdk.services.ec2.model.Tag;
 import software.amazon.awssdk.services.ec2.model.TagSpecification;
@@ -43,7 +44,7 @@ public class Ec2TagServiceImpl implements Ec2TagService {
     }
 
     @Override
-    public TagSpecification buildNameSpecification(String tagName, ResourceType resourceType) {
+    public TagSpecification buildNameTagSpecification(String tagName, ResourceType resourceType) {
         Tag tag = Tag.builder()
                 .key("Name")
                 .value(tagName)
@@ -57,6 +58,14 @@ public class Ec2TagServiceImpl implements Ec2TagService {
         System.out.println("successfully build tagSpecification (%s)".formatted(tagName));
 
         return tagSpecification;
+    }
+
+    @Override
+    public Filter buildFilterName(String tagName) {
+        return Filter.builder()
+                .name("tag:Name")
+                .values(tagName)
+                .build();
     }
 
 }

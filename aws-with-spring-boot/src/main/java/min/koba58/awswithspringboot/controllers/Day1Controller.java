@@ -19,7 +19,7 @@ public class Day1Controller {
 
     private final Day1Service day1Service;
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<Object> createUserForDay1(@RequestParam String userName, @RequestParam String groupName,
             @RequestParam String policyName) {
 
@@ -33,8 +33,9 @@ public class Day1Controller {
         }
     }
 
-    @DeleteMapping("/")
-    public ResponseEntity<Object> deleteUserAndGroupForDay1(@RequestParam String userName, @RequestParam String groupName){
+    @DeleteMapping("")
+    public ResponseEntity<Object> deleteUserAndGroupForDay1(@RequestParam String userName,
+            @RequestParam String groupName) {
         try {
             day1Service.deleteUserAndGroupForDay1(userName, groupName);
 

@@ -1,5 +1,6 @@
 package min.koba58.awswithspringboot.services.vpc.gateway;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -45,5 +46,12 @@ public class InternetGatewayServiceImplTest extends VpcSharedTest {
                 internetGatewayId);
 
         assertTrue(result.sdkHttpResponse().isSuccessful());
+    }
+
+    @Test
+    void testGetInternetGatewayByName_normal() {
+        assertDoesNotThrow(() -> {
+            internetGatewayService.getInternetGatewayIdByName(internetGatewayName);
+        });
     }
 }

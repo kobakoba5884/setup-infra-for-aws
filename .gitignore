@@ -4,5 +4,6 @@ gradle/
 .gradle/
 gradlew*
 .vscode/
+.VSCode*
 
 GlobalConfig.java
