@@ -39,8 +39,7 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public DeleteRouteResponse deleteRoute(String routeId) throws Ec2Exception {
 
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteRoute'");
+        return null;
     }
 
 }

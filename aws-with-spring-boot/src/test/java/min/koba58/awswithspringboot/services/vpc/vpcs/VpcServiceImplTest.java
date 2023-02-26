@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.ec2.model.DeleteVpcResponse;
 public class VpcServiceImplTest extends VpcSharedTest {
     @Test
     public void createVpcTest_normal() {
-        String vpcId = vpcService.createVpc(vpcName,sidrBlock);
+        String vpcId = vpcService.createVpc(vpcName, sidrBlock);
 
         assertFalse(vpcId.isEmpty());
     }

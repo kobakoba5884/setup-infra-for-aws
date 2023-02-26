@@ -18,9 +18,7 @@ public class AvailabilityZoneServiceImpl implements AvailabilityZoneService{
     @Override
     public List<String> getAvailabilityZoneNames() throws Ec2Exception {
         try{
-            DescribeAvailabilityZonesResponse availabilityZonesResponse = ec2Client.describeAvailabilityZones();
-
-            List<AvailabilityZone> availabilityZones = availabilityZonesResponse.availabilityZones();
+            List<AvailabilityZone> availabilityZones = getAvailabilityZone();
 
             availabilityZones.forEach(System.out::println);
 
@@ -32,6 +30,27 @@ public class AvailabilityZoneServiceImpl implements AvailabilityZoneService{
         }
     }
 
-    
-    
+    @Override
+    public String getNetworkBorderGroup(){
+        List<AvailabilityZone> availabilityZones = getAvailabilityZone();
+
+        return availabilityZones.get(0).networkBorderGroup();
+    }
+
+    @Override
+    public List<AvailabilityZone> getAvailabilityZone() throws Ec2Exception {
+        try{
+            DescribeAvailabilityZonesResponse availabilityZonesResponse = ec2Client.describeAvailabilityZones();
+
+            List<AvailabilityZone> availabilityZones = availabilityZonesResponse.availabilityZones();
+
+            availabilityZones.forEach(System.out::println);
+
+            return availabilityZones;
+        }catch (Ec2Exception e) {
+            System.err.println(e.awsErrorDetails().errorMessage());
+
+            throw e;
+        }
+    }
 }

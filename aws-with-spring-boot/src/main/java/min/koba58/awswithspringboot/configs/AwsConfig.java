@@ -26,7 +26,7 @@ public class AwsConfig {
     public static final Path BASE_FOLDER_PATH = Paths.get(System.getProperty("user.home"));
     public static final Path FOLDER_PATH = BASE_FOLDER_PATH.resolve(EC2_FOLDER_PATH);
     private String profileName = getProfileName();
-    public Region DEFAULT_REGION = Region.of(getDefaultRegion());
+    public Region DEFAULT_REGION = getDefaultRegion();
     private ProfileCredentialsProvider profileCredentialsProvider = createProfileCredentialsProvider();
 
     @Bean
@@ -95,7 +95,7 @@ public class AwsConfig {
         return Objects.isNull(profileName) ? "default" : profileName;
     }
 
-    private String getDefaultRegion(){
+    private Region getDefaultRegion(){
         Profile profile = getProfile();
 
         Optional<String> defaultRegion = profile.property("region");
@@ -110,6 +110,6 @@ public class AwsConfig {
 
         System.out.println("default region is %s".formatted(region));
 
-        return region;
+        return Region.of(region);
     }
 }
