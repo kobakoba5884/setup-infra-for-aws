@@ -46,7 +46,9 @@ RUN apt-get install -y less \
     && curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o ${ZIP_FILE} \
     && unzip ${ZIP_FILE}  \
     && ./aws/install \
-    && rm -f ${ZIP_FILE}
+    && rm -f ${ZIP_FILE} \
+    && echo "complete -C '/usr/local/bin/aws_completer' aws" >> ${HOME}/.bashrc \
+    && source ${HOME}/.bashrc
 
 
 # ---------------------------------- set up language ----------------------------------

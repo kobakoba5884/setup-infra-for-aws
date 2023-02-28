@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Practice {
     public static void main(String[] args) {
-        int commitCount = 1000;
+        int commitCount = 0;
         int n = 1000;
         List<Integer> list = Collections.nCopies(n, 1);
         Iterator<Integer> iterator = list.iterator();
@@ -16,10 +16,12 @@ public class Practice {
             iterator.next();
             count++;
 
-            if (commitCount == 0) {
+            boolean isCommitRequired = commitCount == 0
+                    || count % commitCount == 0
+                    || !iterator.hasNext();
+
+            if (isCommitRequired) {
                 System.out.println("second conditional branch: %d".formatted(count));
-            }else if (count % commitCount == 0 || !iterator.hasNext()) {
-                System.out.println("first conditional branch: %d".formatted(count));
             }
         }
     }

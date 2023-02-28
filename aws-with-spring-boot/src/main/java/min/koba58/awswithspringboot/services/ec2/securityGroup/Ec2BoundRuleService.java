@@ -7,6 +7,6 @@ import software.amazon.awssdk.services.ec2.model.Ec2Exception;
 import software.amazon.awssdk.services.ec2.model.IpPermission;
 
 public interface Ec2BoundRuleService {
-    AuthorizeSecurityGroupIngressResponse addInboundRuleToSecurityGroup(String securityGroupName,
+    AuthorizeSecurityGroupIngressResponse addInboundRulesToSecurityGroup(String securityGroupName,
             List<IpPermission> ipPermissions) throws Ec2Exception;
 }

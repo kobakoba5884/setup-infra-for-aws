@@ -23,7 +23,7 @@ public class Ec2BoundRuleServiceImpl implements Ec2BoundRuleService {
     private final IpAddressHandler IpAddressHandler;
 
     @Override
-    public AuthorizeSecurityGroupIngressResponse addInboundRuleToSecurityGroup(String securityGroupName,
+    public AuthorizeSecurityGroupIngressResponse addInboundRulesToSecurityGroup(String securityGroupName,
             List<IpPermission> ipPermissions) throws Ec2Exception {
 
         AuthorizeSecurityGroupIngressRequest authorizeSecurityGroupIngressRequest = AuthorizeSecurityGroupIngressRequest
