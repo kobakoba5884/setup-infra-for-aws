@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import min.koba58.awswithspringboot.dtos.CreateMultiAZDto;
 import min.koba58.awswithspringboot.dtos.CreateSubnetDto;
+import min.koba58.awswithspringboot.dtos.DeleteMultiAZDto;
 import min.koba58.awswithspringboot.services.vpc.gateway.InternetGatewayService;
 import min.koba58.awswithspringboot.services.vpc.subnet.SubnetService;
 import min.koba58.awswithspringboot.services.vpc.vpcs.VpcService;
@@ -39,5 +40,21 @@ public class BuildNetworkServiceImpl implements BuildNetworkService{
         internetGatewayService.attachInternetGatewayToVpc(vpcId, internetGatewayId);
     }
 
-    
+    @Override
+    public void deleteVpcForBasicMultiAZ(DeleteMultiAZDto dto) throws Ec2Exception {
+        String vpcId = dto.getVpcId();
+        String internetGatewayId = dto.getInternetGatewayId();
+
+        internetGatewayService.detachInternetGatewayFromVpc(vpcId, internetGatewayId);
+
+        internetGatewayService.deleteInternetGatewayById(internetGatewayId);
+
+        List<String> subnetIds = dto.getSubnetIdList();
+
+        subnetIds.stream().forEach(subnetId -> {
+            subnetService.deleteSubnet(subnetId);
+        });
+
+        vpcService.deleteVpcById(vpcId);
+    }
 }
