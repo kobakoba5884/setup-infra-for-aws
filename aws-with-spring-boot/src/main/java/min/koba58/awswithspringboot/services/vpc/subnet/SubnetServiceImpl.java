@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import min.koba58.awswithspringboot.services.ec2.tag.Ec2TagService;
 import min.koba58.awswithspringboot.utils.SharedHandler;
 import software.amazon.awssdk.awscore.exception.AwsErrorDetails;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
@@ -18,6 +19,7 @@ import software.amazon.awssdk.services.ec2.model.DescribeSubnetsRequest;
 import software.amazon.awssdk.services.ec2.model.DescribeSubnetsResponse;
 import software.amazon.awssdk.services.ec2.model.Ec2Exception;
 import software.amazon.awssdk.services.ec2.model.Filter;
+import software.amazon.awssdk.services.ec2.model.ResourceType;
 import software.amazon.awssdk.services.ec2.model.Subnet;
 import software.amazon.awssdk.services.ec2.model.TagSpecification;
 
@@ -26,11 +28,15 @@ import software.amazon.awssdk.services.ec2.model.TagSpecification;
 public class SubnetServiceImpl implements SubnetService{
     private final Ec2Client ec2Client;
 
+    private final Ec2TagService ec2TagService;
+
     private final SharedHandler sharedHandler;
 
     @Override
-    public CreateSubnetResponse createSubnet(TagSpecification tagSpecification, String cidrBlock, String vpcId,
+    public CreateSubnetResponse createSubnet(String subnetName, String cidrBlock, String vpcId,
             String availabilityZoneName) throws Ec2Exception {
+
+        TagSpecification tagSpecification = ec2TagService.buildNameTagSpecification(subnetName, ResourceType.SUBNET);
 
         CreateSubnetRequest createSubnetRequest = CreateSubnetRequest.builder()
             .cidrBlock(cidrBlock)

@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import min.koba58.awswithspringboot.services.vpc.az.AvailabilityZoneService;
+import min.koba58.awswithspringboot.dtos.CreateMultiAZDto;
+import min.koba58.awswithspringboot.dtos.CreateSubnetDto;
+import min.koba58.awswithspringboot.services.vpc.gateway.InternetGatewayService;
+import min.koba58.awswithspringboot.services.vpc.subnet.SubnetService;
 import min.koba58.awswithspringboot.services.vpc.vpcs.VpcService;
 import software.amazon.awssdk.services.ec2.model.Ec2Exception;
 
@@ -14,19 +17,26 @@ import software.amazon.awssdk.services.ec2.model.Ec2Exception;
 public class BuildNetworkServiceImpl implements BuildNetworkService{
     private final VpcService vpcService;
 
-    private final AvailabilityZoneService availabilityZoneService;
+    private final SubnetService subnetService;
+
+    private final InternetGatewayService internetGatewayService;
 
     @Override
-    public void createVpcForBasicMultiAZ(String vpcName, String sidrBlockForVpc) throws Ec2Exception {
-        @SuppressWarnings("unused")
-        String vpcId = vpcService.createVpc(vpcName, sidrBlockForVpc);
+    public void createVpcForBasicMultiAZ(CreateMultiAZDto dto) throws Ec2Exception {
+        String vpcId = vpcService.createVpc(dto.getVpcName(), dto.getSidrBlockForVpc());
 
-        List<String> availabilityZones = availabilityZoneService.getAvailabilityZoneNames();
+        List<CreateSubnetDto> subnetDtos = dto.getSubnetList();
 
-        // create public subnet
-        availabilityZones.stream().limit(2).forEach(availabilityZoneId -> {
-
+        subnetDtos.stream().forEach(subnetDto -> {
+            subnetService.createSubnet(subnetDto.getSubnetName(),
+                                       subnetDto.getCidrBlockForSubnet(),
+                                       vpcId, 
+                                       subnetDto.getAvailabilityZoneName());
         });
+
+        String internetGatewayId = internetGatewayService.createInternetGateway(dto.getInternetGatewayName());
+
+        internetGatewayService.attachInternetGatewayToVpc(vpcId, internetGatewayId);
     }
 
     

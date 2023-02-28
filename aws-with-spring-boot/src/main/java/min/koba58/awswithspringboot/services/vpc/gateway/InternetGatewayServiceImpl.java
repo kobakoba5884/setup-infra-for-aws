@@ -37,7 +37,7 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
     private final SharedHandler sharedHandler;
 
     @Override
-    public CreateInternetGatewayResponse createInternetGateway(String internetGatewayName) throws Ec2Exception {
+    public String createInternetGateway(String internetGatewayName) throws Ec2Exception {
 
         TagSpecification tagSpecification = ec2TagService.buildNameTagSpecification(internetGatewayName,
                 ResourceType.INTERNET_GATEWAY);
@@ -58,7 +58,7 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
             System.out.printf("Created Internet Gateway with ID %s\n", igwId);
             System.out.println(internetGatewayName);
 
-            return createInternetGatewayResponse;
+            return igwId;
         } catch (Ec2Exception e) {
             System.err.println(e.awsErrorDetails().errorMessage());
 

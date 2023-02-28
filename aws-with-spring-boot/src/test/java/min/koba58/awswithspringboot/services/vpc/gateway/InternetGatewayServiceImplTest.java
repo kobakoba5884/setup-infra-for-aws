@@ -7,16 +7,15 @@ import org.junit.jupiter.api.Test;
 
 import min.koba58.awswithspringboot.services.vpc.VpcSharedTest;
 import software.amazon.awssdk.services.ec2.model.AttachInternetGatewayResponse;
-import software.amazon.awssdk.services.ec2.model.CreateInternetGatewayResponse;
 import software.amazon.awssdk.services.ec2.model.DeleteInternetGatewayResponse;
 import software.amazon.awssdk.services.ec2.model.DetachInternetGatewayResponse;
 
 public class InternetGatewayServiceImplTest extends VpcSharedTest {
     @Test
     void testCreateInternetGateway() {
-        CreateInternetGatewayResponse result = internetGatewayService.createInternetGateway(internetGatewayName);
+        String result = internetGatewayService.createInternetGateway(internetGatewayName);
 
-        assertTrue(result.sdkHttpResponse().isSuccessful());
+        assertTrue(!result.isEmpty());
     }
 
     @Test

@@ -53,5 +53,29 @@
       }
     ],
     "tests": []
+  },
+  {
+    "_id": "426ba8c9-4f7f-4c76-b6e6-ec735efedee2",
+    "colId": "93e0f998-3dba-46ee-9750-f3f05ce6fcb1",
+    "containerId": "bea481b2-0cf4-48ad-90f6-d74c703acad2",
+    "name": "createVpcForBasicMultiAZ",
+    "url": "{{BASE_URL}}/vpc/multiAZ",
+    "method": "POST",
+    "sortNum": 50000,
+    "created": "2023-02-28T15:06:21.098Z",
+    "modified": "2023-02-28T15:16:13.089Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"vpcName\": \"my-vpc\",\n  \"sidrBlockForVpc\": \"10.0.0.0/16\",\n  \"subnetList\": [\n    {\n      \"subnetName\": \"my-subnet-1a\",\n      \"cidrBlockForSubnet\": \"10.0.0.0/24\",\n      \"availabilityZoneName\": \"ap-northeast-1a\"\n    },\n    {\n      \"subnetName\": \"my-subnet-1c\",\n      \"cidrBlockForSubnet\": \"10.0.1.0/24\",\n      \"availabilityZoneName\": \"ap-northeast-1c\"\n    }\n  ],\n  \"internetGatewayName\": \"my-igw\"\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]

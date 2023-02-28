@@ -107,7 +107,7 @@ public class LoginProfileServiceImpl implements LoginProfileService {
     @Override
     public ChangePasswordResponse changeIamUserPassword(String userName, String currentPassword, String newPassword)
             throws IamException {
-        
+
         ChangePasswordRequest changePasswordRequest = ChangePasswordRequest.builder()
                 .oldPassword(currentPassword)
                 .newPassword(newPassword)
