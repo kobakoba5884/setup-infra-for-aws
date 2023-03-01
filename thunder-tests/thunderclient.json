@@ -101,5 +101,42 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "9aeccf23-6a01-433b-8570-17b7d5b17109",
+    "colId": "93e0f998-3dba-46ee-9750-f3f05ce6fcb1",
+    "containerId": "18fefeb8-365a-4df4-ac0f-079990a176ab",
+    "name": "createRouteTable",
+    "url": "{{BASE_URL}}/route-table?routeTableName=test-route-table&vpcId=vpc-0868077f3667ae01c",
+    "method": "POST",
+    "sortNum": 80000,
+    "created": "2023-03-01T03:28:14.756Z",
+    "modified": "2023-03-01T03:30:14.256Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "routeTableName",
+        "value": "test-route-table",
+        "isPath": false
+      },
+      {
+        "name": "vpcId",
+        "value": "vpc-0868077f3667ae01c",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "4cb41cfb-f7f7-4cf5-ab67-a1ec5c6a92c4",
+    "colId": "93e0f998-3dba-46ee-9750-f3f05ce6fcb1",
+    "containerId": "18fefeb8-365a-4df4-ac0f-079990a176ab",
+    "name": "deleteRouteTable",
+    "url": "",
+    "method": "GET",
+    "sortNum": 90000,
+    "created": "2023-03-01T03:29:42.413Z",
+    "modified": "2023-03-01T03:29:45.469Z",
+    "headers": []
   }
 ]
